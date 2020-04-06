@@ -16,32 +16,52 @@ public class Parser {
 
 PARSER_END(Parser)
 
-TOKENS: {
-    <PUBLIC : "public"> // Lowercase pattern
-    <STATIC : "static"> // Bold keywords from book
-    <VOID : "void">
-    <MAIN : "main">
+TOKENS: {   
+    // Bold keywords from book
+        <PUBLIC : "public"> // Lowercase pattern
+    |   <STATIC : "static">
+    |   <VOID : "void">
+    |   <MAIN : "main">
 
-    <CLASS : "class">
-    <EXTENDS : "extends">
+    |   <CLASS : "class">
+    |   <EXTENDS : "extends">
 
-    <PRINT : "System.out.println">
+    |   <PRINT : "System.out.println">
 
-    <THIS : "this">
-    <NEW : "new">
-    <STRING : "String"> 
-    <INT: "int">
-    <RETURN : "return">
+    |   <THIS : "this">
+    |   <NEW : "new">
+    |   <STRING : "String"> 
+    |   <INT: "int">
+    |   <RETURN : "return">
 
-    <BOOLEAN: "boolean">
-    <TRUE : "true">
-    <FALSE : "false">
+    |   <BOOLEAN: "boolean">
+    |   <TRUE : "true">
+    |   <FALSE : "false">
 
-    <IF : "if">
-    <ELSE : "else">
-    <WHILE : "while">
+    |   <IF : "if">
+    |   <ELSE : "else">
+    |   <WHILE : "while">
 
-    <LENGTH : "length">
+    |   <LENGTH : "length">
+
+    // Some local tokens necessary bellow
+    |   <#LETTER : ["A" - "Z"]["a"-"b"] > 
+    |   <#DIGIT : ["0"-"9"] >
+    |   <#REAL : (
+                    (<DIGIT>)+ "." (<DIGIT>)*  // Real numbers can be like this way
+                  ) |
+                 (
+                    (<DIGIT>)* "." (<DIGIT>)+  // Or this
+                  ) >
+    |   <#INTERGER : (<DIGTT>)+  //  Maybe this is unnecessary
+    
+    // The lexical issues
+    |   <ID : <LETTER>(<LETTER> | <DIGIT> | "-")*> 
+    |   <INTERGER_LITERAL : <ID> | <INTERGER> | <REAL> >
+    |   <OP : "&&" | "<" | "+" | "-" | "*"> // > not added
+    
+    
+    
     
 }
 
