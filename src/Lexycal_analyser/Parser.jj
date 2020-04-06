@@ -21,21 +21,28 @@ TOKENS: {
     <STATIC : "static"> // Bold keywords from book
     <VOID : "void">
     <MAIN : "main">
-    <CLASS : "class"> // Verify
-    <STRING : "String"> // Verify
+
+    <CLASS : "class">
     <EXTENDS : "extends">
-    <RETURN : "return">
+
+    <PRINT : "System.out.println">
+
+    <THIS : "this">
+    <NEW : "new">
+    <STRING : "String"> 
     <INT: "int">
+    <RETURN : "return">
+
     <BOOLEAN: "boolean">
+    <TRUE : "true">
+    <FALSE : "false">
+
     <IF : "if">
     <ELSE : "else">
     <WHILE : "while">
-    <SOP : "System.out.println">
+
     <LENGTH : "length">
-    <TRUE : "true">
-    <FALSE : "false">
-    <THIS : "this">
-    <NEW : "new">
+    
 }
 
 SKIP: {
