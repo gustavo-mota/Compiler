@@ -96,47 +96,68 @@ SKIP: {
 // Por enquanto retornam apenas void
 
 void Program(){}{
-
+	MainClass()
+	(ClassDecl)*
 }
 
 void MainClass(){}{
-
+	<CLASS>
+	<ID>
+	<LBRACE> <PUBLIC> <STATIC> <VOID> <MAIN>
+	<LPAREN> <STRING> <LCOLCH> <RCOLCH> <ID> <RPAREN>
+	<LBRACE> Statement() <RBRACE>
+	<RBRACE>
 }
 
 void ClassDecl(){  // Correction
 
 }{ 
+	<CLASS> <ID> ClassDecl_Aux()
 
 }
 
 void ClassDEcl_Aux(){}{
-
+	(<LBRACE> (VarDecl)* (MethodDecl)* <RBRACE>) |
+	(
+	<EXTENDS> <ID> 
+	<LBRACE> <ID> (VarDecl)* (MethodDecl)* <RBRACE>
+	)
 }
 
 void VarDecl(){}{
-
+	Type() <ID>
 }
 
 void MethodDecl(){}{
-
+	<PUBLIC> Type() <ID>
+	<LPAREN> FormalList() <RPAREN>
+	<LBRACE> (VarDecl)* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
 }
 
 void FormalList(){}{
-
+	Type() <ID> (FormalRest())* | " "
 }
 
 void FormalRest(){}{
-
+	<COMMA> Type() <ID>
 }
 
 void Type(){}{
-
+		<ID> <LCOLCH> <RCOLCH>
+	|	<BOOLEAN> 
+	|	<INT> 
+	|	<ID>
 }
 
 void Statement(){  // Dúvida
-
+	
 }{
-
+		<LBRACE> (Statement())* <RBRACE>
+	|	<IF> Statement() <ELSE> Statement()
+	|	<WHILE> <LPAREN> Exp() <RPAREN> Statement()
+	|	<PRINT> <LPAREN> Exp() <RPAREN> <SEMI_COMMA>
+	|	<ID> <EQUAL> Exp() <SEMI_COMMA>
+	|	<ID> <LCOLCH> <Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
 }
 
 void Exp(){  // Correction
