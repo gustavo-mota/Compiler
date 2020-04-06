@@ -5,7 +5,7 @@ PARSER_BEGIN(Parser)
 public class Parser {
     public static void main(String[] args) {
         try {
-            new Parser(new java.io.FileInputStream(args[0]));
+            new Parser(new java.io.FileInputStream(args[0])).S(); // Source code
             System.out.println("Syntax is okay");
         } catch (Throwable e) {
             // Catching Throwable is ugly but JavaCC throws Error objects!
@@ -17,7 +17,25 @@ public class Parser {
 PARSER_END(Parser)
 
 TOKENS: {
-    
+    <PUBLIC : "public"> // Lowercase pattern
+    <STATIC : "static"> // Bold keywords from book
+    <VOID : "void">
+    <MAIN : "main">
+    <CLASS : "class"> // Verify
+    <STRING : "String"> // Verify
+    <EXTENDS : "extends">
+    <RETURN : "return">
+    <INT: "int">
+    <BOOLEAN: "boolean">
+    <IF : "if">
+    <ELSE : "else">
+    <WHILE : "while">
+    <SOP : "System.out.println">
+    <LENGTH : "length">
+    <TRUE : "true">
+    <FALSE : "false">
+    <THIS : "this">
+    <NEW : "new">
 }
 
 SKIP: {
