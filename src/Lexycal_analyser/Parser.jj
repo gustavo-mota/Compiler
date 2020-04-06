@@ -58,13 +58,101 @@ TOKENS: {
     // The lexical issues
     |   <ID : <LETTER>(<LETTER> | <DIGIT> | "-")*> 
     |   <INTERGER_LITERAL : <ID> | <INTERGER> | <REAL> >
-    |   <OP : "&&" | "<" | "+" | "-" | "*"> // > not added
-    
-    
-    
-    
+    |   <OP : "&&" | "<" | "+" | "-" | "*"> // Tenho dúvida em usar isso
+
+    // Necessary symbols
+    |   <AND : "&&">
+    |   <OR : "||">
+    |   <EQUAL : "=">
+
+    |   <LESS_THEN : "<">
+    |   <BIGGER_THEN : ">">
+    |   <PLUS : "+">
+    |   <MINUS : "-">
+    |   <TIMES : "*">
+    |   <BAR : "/">
+
+    |   <LPAREN : "(">
+    |   <RPAREN : ")">
+    |   <LBRACE : "{">
+    |   <RBRACE : "}">
+    |   <RBRACE_INTER : ")?">
+    |   <LCOLCH : "[">
+    |   <RCOLCH : "]">
+
+    |   <BANG : "!">
+    |   <DOT : ".">
+    |   <COMMA : ",">
+    |   <SEMI_COMMA : ";">
+
+
 }
 
 SKIP: {
      " " | "\t" | "\n" | "\r"
+}
+
+
+// Por enquanto retornam apenas void
+
+void Program(){}{
+
+}
+
+void MainClass(){}{
+
+}
+
+void ClassDecl(){  // Correction
+
+}{ 
+
+}
+
+void ClassDEcl_Aux(){}{
+
+}
+
+void VarDecl(){}{
+
+}
+
+void MethodDecl(){}{
+
+}
+
+void FormalList(){}{
+
+}
+
+void FormalRest(){}{
+
+}
+
+void Type(){}{
+
+}
+
+void Statement(){  // Dúvida
+
+}{
+
+}
+
+void Exp(){  // Correction
+
+}{
+
+}
+
+void Exp_Aux(){}{
+
+}
+
+void Explist(){}{
+
+}
+
+void ExpRest(){}{
+
 }
