@@ -1,1 +1,25 @@
+// https://cs.lmu.edu/~ray/notes/javacc/
 
+PARSER_BEGIN(Parser)
+
+public class Parser {
+    public static void main(String[] args) {
+        try {
+            new Parser(new java.io.FileInputStream(args[0]));
+            System.out.println("Syntax is okay");
+        } catch (Throwable e) {
+            // Catching Throwable is ugly but JavaCC throws Error objects!
+            System.out.println("Syntax check failed: " + e.getMessage());
+        }
+    }
+}
+
+PARSER_END(Parser)
+
+TOKENS: {
+    
+}
+
+SKIP: {
+     " " | "\t" | "\n" | "\r"
+}
