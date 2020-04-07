@@ -53,7 +53,7 @@ TOKEN : {
                  (
                     (<DIGIT>)* "." (<DIGIT>)+  // Or this
                   ) >
-    |   <#INTERGER : (<DIGTT>)+ > //  Maybe this is unnecessary
+    |   <#INTERGER : (<DIGIT>)+ > //  Maybe this is unnecessary
     
     // The lexical issues
     |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) >  // Expression migh be in parenthesis
@@ -116,12 +116,13 @@ void ClassDecl():	{  // Correction
 
 }
 
-void ClassDEcl_Aux():	{}{
-	(<LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>) |
-	(
-	<EXTENDS> <ID> 
-	<LBRACE> <ID> (VarDecl())* (MethodDecl())* <RBRACE>
-	)
+void ClassDecl_Aux():	{}{
+		(<LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>)
+	|	(
+		<EXTENDS> <ID> 
+		<LBRACE> <ID> (VarDecl())* (MethodDecl())* <RBRACE>
+		)
+	|	{}  // Empty definition
 }
 
 void VarDecl():	{}{
@@ -135,7 +136,7 @@ void MethodDecl():	{}{
 }
 
 void FormalList():	{}{
-	Type() <ID> (FormalRest())* | " "
+	Type() <ID> (FormalRest())* | {}
 }
 
 void FormalRest():	{}{
@@ -165,7 +166,7 @@ void Exp():	{  // Correction
 }{
 		<TRUE> Exp_Aux()
 	|	<FALSE> Exp_Aux()
-	|	<INTERGER_LIETRAL> Exp_Aux()
+	|	<INTERGER_LITERAL> Exp_Aux()
 	|	<ID> Exp_Aux()
 	|	<THIS> Exp_Aux()
 	|	<NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
@@ -175,16 +176,16 @@ void Exp():	{  // Correction
 }
 
 void Exp_Aux():	{}{
-		<OP> Exp() (Exp_Aux())*
+		<OP> Exp() Exp_Aux()
 	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
 	|	<DOT> <LENGTH> Exp_Aux()
-	|	<DOT> <ID> <LPAREN> (Exp_List())* <RPAREN> Exp_Aux()
-	|	" "
+	|	<DOT> <ID> <LPAREN> ExpList() <RPAREN> Exp_Aux()
+	|	{}
 }
 
-void Explist():	{}{
+void ExpList():	{}{
 		Exp() (ExpRest())*
-	|	" "
+	|	{}
 }
 
 void ExpRest():	{}{
