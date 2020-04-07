@@ -16,7 +16,7 @@ public class Parser {
 
 PARSER_END(Parser)
 
-TOKENS: {   
+TOKEN : {   
     // Bold keywords from book
         <PUBLIC : "public"> // Lowercase pattern
     |   <STATIC : "static">
@@ -53,10 +53,10 @@ TOKENS: {
                  (
                     (<DIGIT>)* "." (<DIGIT>)+  // Or this
                   ) >
-    |   <#INTERGER : (<DIGTT>)+  //  Maybe this is unnecessary
+    |   <#INTERGER : (<DIGTT>)+ > //  Maybe this is unnecessary
     
     // The lexical issues
-    |   <ID : <LETTER>(<LETTER> | <DIGIT> | "-")*> 
+    |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) >  // Expression migh be in parenthesis
     |   <INTERGER_LITERAL : <ID> | <INTERGER> | <REAL> >
     |   <OP : "&&" | "<" | "+" | "-" | "*"> // Tenho dúvida em usar isso
 
@@ -88,19 +88,19 @@ TOKENS: {
 
 }
 
-SKIP: {
+SKIP : {
      " " | "\t" | "\n" | "\r"
 }
 
 
 // Por enquanto retornam apenas void
 
-void Program(){}{
-	MainClass()
-	(ClassDecl)*
+void Program():	{}{
+	MainClass() 
+	(ClassDecl())*
 }
 
-void MainClass(){}{
+void MainClass():	{}{
 	<CLASS>
 	<ID>
 	<LBRACE> <PUBLIC> <STATIC> <VOID> <MAIN>
@@ -109,47 +109,47 @@ void MainClass(){}{
 	<RBRACE>
 }
 
-void ClassDecl(){  // Correction
+void ClassDecl():	{  // Correction
 
 }{ 
 	<CLASS> <ID> ClassDecl_Aux()
 
 }
 
-void ClassDEcl_Aux(){}{
-	(<LBRACE> (VarDecl)* (MethodDecl)* <RBRACE>) |
+void ClassDEcl_Aux():	{}{
+	(<LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>) |
 	(
 	<EXTENDS> <ID> 
-	<LBRACE> <ID> (VarDecl)* (MethodDecl)* <RBRACE>
+	<LBRACE> <ID> (VarDecl())* (MethodDecl())* <RBRACE>
 	)
 }
 
-void VarDecl(){}{
+void VarDecl():	{}{
 	Type() <ID>
 }
 
-void MethodDecl(){}{
+void MethodDecl():	{}{
 	<PUBLIC> Type() <ID>
 	<LPAREN> FormalList() <RPAREN>
-	<LBRACE> (VarDecl)* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
+	<LBRACE> (VarDecl())* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
 }
 
-void FormalList(){}{
+void FormalList():	{}{
 	Type() <ID> (FormalRest())* | " "
 }
 
-void FormalRest(){}{
+void FormalRest():	{}{
 	<COMMA> Type() <ID>
 }
 
-void Type(){}{
+void Type():	{}{
 		<ID> <LCOLCH> <RCOLCH>
 	|	<BOOLEAN> 
 	|	<INT> 
 	|	<ID>
 }
 
-void Statement(){  // Dúvida
+void Statement():	{  // Dúvida
 	
 }{
 		<LBRACE> (Statement())* <RBRACE>
@@ -157,10 +157,10 @@ void Statement(){  // Dúvida
 	|	<WHILE> <LPAREN> Exp() <RPAREN> Statement()
 	|	<PRINT> <LPAREN> Exp() <RPAREN> <SEMI_COMMA>
 	|	<ID> <EQUAL> Exp() <SEMI_COMMA>
-	|	<ID> <LCOLCH> <Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
+	|	<ID> <LCOLCH> Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
 }
 
-void Exp(){  // Correction
+void Exp():	{  // Correction
 
 }{
 		<TRUE> Exp_Aux()
@@ -174,7 +174,7 @@ void Exp(){  // Correction
 	|	<BANG> Exp() Exp_Aux()
 }
 
-void Exp_Aux(){}{
+void Exp_Aux():	{}{
 		<OP> Exp() (Exp_Aux())*
 	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
 	|	<DOT> <LENGTH> Exp_Aux()
@@ -182,12 +182,12 @@ void Exp_Aux(){}{
 	|	" "
 }
 
-void Explist(){}{
+void Explist():	{}{
 		Exp() (ExpRest())*
 	|	" "
 }
 
-void ExpRest(){}{
+void ExpRest():	{}{
 	<COMMA> Exp()
 }
 
