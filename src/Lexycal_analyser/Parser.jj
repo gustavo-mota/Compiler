@@ -163,17 +163,31 @@ void Statement(){  // Dúvida
 void Exp(){  // Correction
 
 }{
-
+		<TRUE> Exp_Aux()
+	|	<FALSE> Exp_Aux()
+	|	<INTERGER_LIETRAL> Exp_Aux()
+	|	<ID> Exp_Aux()
+	|	<THIS> Exp_Aux()
+	|	<NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
+	|	<NEW> <ID> <LPAREN> <RPAREN> Exp_Aux()
+	|	<LPAREN> Exp() <RPAREN> Exp_Aux()
+	|	<BANG> Exp() Exp_Aux()
 }
 
 void Exp_Aux(){}{
-
+		<OP> Exp() (Exp_Aux())*
+	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
+	|	<DOT> <LENGTH> Exp_Aux()
+	|	<DOT> <ID> <LPAREN> (Exp_List())* <RPAREN> Exp_Aux()
+	|	" "
 }
 
 void Explist(){}{
-
+		Exp() (ExpRest())*
+	|	" "
 }
 
 void ExpRest(){}{
-
+	<COMMA> Exp()
 }
+
