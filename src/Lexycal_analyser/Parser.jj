@@ -57,7 +57,7 @@ TOKEN : {
     
     // The lexical issues
     |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) >  // Expression migh be in parenthesis
-    |   <INTERGER_LITERAL : <ID> | <INTERGER> | <REAL> >
+    |   <INTERGER_LITERAL : <ID> | <INTERGER> | <REAL> >  // Maybe necessary change id token
     |   <OP : "&&" | "<" | "+" | "-" | "*"> // Tenho dúvida em usar isso
 
     // Necessary symbols
@@ -102,9 +102,9 @@ void Program():	{}{
 
 void MainClass():	{}{
 	<CLASS>
-	<ID>
+	Id()
 	<LBRACE> <PUBLIC> <STATIC> <VOID> <MAIN>
-	<LPAREN> <STRING> <LCOLCH> <RCOLCH> <ID> <RPAREN>
+	<LPAREN> <STRING> <LCOLCH> <RCOLCH> Id() <RPAREN>
 	<LBRACE> Statement() <RBRACE>
 	<RBRACE>
 }
@@ -112,42 +112,42 @@ void MainClass():	{}{
 void ClassDecl():	{  // Correction
 
 }{ 
-	<CLASS> <ID> ClassDecl_Aux()
+	<CLASS> Id() ClassDecl_Aux()
 
 }
 
 void ClassDecl_Aux():	{}{
 		(<LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>)
 	|	(
-		<EXTENDS> <ID> 
-		<LBRACE> <ID> (VarDecl())* (MethodDecl())* <RBRACE>
+		<EXTENDS> Id() 
+		<LBRACE> Id() (VarDecl())* (MethodDecl())* <RBRACE>
 		)
 	|	{}  // Empty definition
 }
 
 void VarDecl():	{}{
-	Type() <ID>
+	Type() Id()
 }
 
 void MethodDecl():	{}{
-	<PUBLIC> Type() <ID>
+	<PUBLIC> Type() Id()
 	<LPAREN> FormalList() <RPAREN>
 	<LBRACE> (VarDecl())* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
 }
 
 void FormalList():	{}{
-	Type() <ID> (FormalRest())* | {}
+	Type() Id() (FormalRest())* | {}
 }
 
 void FormalRest():	{}{
-	<COMMA> Type() <ID>
+	<COMMA> Type() Id()
 }
 
 void Type():	{}{
-		<ID> <LCOLCH> <RCOLCH>
+		Id() <LCOLCH> <RCOLCH>
 	|	<BOOLEAN> 
 	|	<INT> 
-	|	<ID>
+	|	Id()
 }
 
 void Statement():	{  // Dúvida
@@ -157,8 +157,8 @@ void Statement():	{  // Dúvida
 	|	<IF> Statement() <ELSE> Statement()
 	|	<WHILE> <LPAREN> Exp() <RPAREN> Statement()
 	|	<PRINT> <LPAREN> Exp() <RPAREN> <SEMI_COMMA>
-	|	<ID> <EQUAL> Exp() <SEMI_COMMA>
-	|	<ID> <LCOLCH> Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
+	|	Id() <EQUAL> Exp() <SEMI_COMMA>
+	|	Id() <LCOLCH> Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
 }
 
 void Exp():	{  // Correction
@@ -167,10 +167,10 @@ void Exp():	{  // Correction
 		<TRUE> Exp_Aux()
 	|	<FALSE> Exp_Aux()
 	|	<INTERGER_LITERAL> Exp_Aux()
-	|	<ID> Exp_Aux()
+	|	Id() Exp_Aux()
 	|	<THIS> Exp_Aux()
 	|	<NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
-	|	<NEW> <ID> <LPAREN> <RPAREN> Exp_Aux()
+	|	<NEW> Id() <LPAREN> <RPAREN> Exp_Aux()
 	|	<LPAREN> Exp() <RPAREN> Exp_Aux()
 	|	<BANG> Exp() Exp_Aux()
 }
@@ -179,7 +179,7 @@ void Exp_Aux():	{}{
 		<OP> Exp() Exp_Aux()
 	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
 	|	<DOT> <LENGTH> Exp_Aux()
-	|	<DOT> <ID> <LPAREN> ExpList() <RPAREN> Exp_Aux()
+	|	<DOT> Id() <LPAREN> ExpList() <RPAREN> Exp_Aux()
 	|	{}
 }
 
@@ -192,3 +192,6 @@ void ExpRest():	{}{
 	<COMMA> Exp()
 }
 
+void Id():	{}{  // Declared and struture
+	<ID>
+}

@@ -32,7 +32,7 @@ void Program() throws ParseException {
 
   static final public void MainClass() throws ParseException {
     jj_consume_token(CLASS);
-    jj_consume_token(ID);
+    Id();
     jj_consume_token(LBRACE);
     jj_consume_token(PUBLIC);
     jj_consume_token(STATIC);
@@ -42,7 +42,7 @@ void Program() throws ParseException {
     jj_consume_token(STRING);
     jj_consume_token(LCOLCH);
     jj_consume_token(RCOLCH);
-    jj_consume_token(ID);
+    Id();
     jj_consume_token(RPAREN);
     jj_consume_token(LBRACE);
     Statement();
@@ -52,7 +52,7 @@ void Program() throws ParseException {
 
   static final public void ClassDecl() throws ParseException {
     jj_consume_token(CLASS);
-    jj_consume_token(ID);
+    Id();
     ClassDecl_Aux();
   }
 
@@ -93,9 +93,9 @@ void Program() throws ParseException {
       }
     case EXTENDS:{
       jj_consume_token(EXTENDS);
-      jj_consume_token(ID);
+      Id();
       jj_consume_token(LBRACE);
-      jj_consume_token(ID);
+      Id();
       label_4:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -135,13 +135,13 @@ void Program() throws ParseException {
 
   static final public void VarDecl() throws ParseException {
     Type();
-    jj_consume_token(ID);
+    Id();
   }
 
   static final public void MethodDecl() throws ParseException {
     jj_consume_token(PUBLIC);
     Type();
-    jj_consume_token(ID);
+    Id();
     jj_consume_token(LPAREN);
     FormalList();
     jj_consume_token(RPAREN);
@@ -190,7 +190,7 @@ void Program() throws ParseException {
     case BOOLEAN:
     case ID:{
       Type();
-      jj_consume_token(ID);
+      Id();
       label_8:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -215,13 +215,13 @@ void Program() throws ParseException {
   static final public void FormalRest() throws ParseException {
     jj_consume_token(COMMA);
     Type();
-    jj_consume_token(ID);
+    Id();
   }
 
   static final public void Type() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ID:{
-      jj_consume_token(ID);
+      Id();
       jj_consume_token(LCOLCH);
       jj_consume_token(RCOLCH);
       break;
@@ -234,7 +234,7 @@ void Program() throws ParseException {
       jj_consume_token(INT);
       break;
       }{
-      jj_consume_token(ID);
+      Id();
       break;
       }
     default:
@@ -292,13 +292,13 @@ void Program() throws ParseException {
       break;
       }
     case ID:{
-      jj_consume_token(ID);
+      Id();
       jj_consume_token(EQUAL);
       Exp();
       jj_consume_token(SEMI_COMMA);
       break;
       }{
-      jj_consume_token(ID);
+      Id();
       jj_consume_token(LCOLCH);
       Exp();
       jj_consume_token(RCOLCH);
@@ -332,7 +332,7 @@ void Program() throws ParseException {
       break;
       }
     case ID:{
-      jj_consume_token(ID);
+      Id();
       Exp_Aux();
       break;
       }
@@ -351,7 +351,7 @@ void Program() throws ParseException {
       break;
       }{
       jj_consume_token(NEW);
-      jj_consume_token(ID);
+      Id();
       jj_consume_token(LPAREN);
       jj_consume_token(RPAREN);
       Exp_Aux();
@@ -399,7 +399,7 @@ void Program() throws ParseException {
       break;
       }{
       jj_consume_token(DOT);
-      jj_consume_token(ID);
+      Id();
       jj_consume_token(LPAREN);
       ExpList();
       jj_consume_token(RPAREN);
@@ -447,6 +447,10 @@ void Program() throws ParseException {
   static final public void ExpRest() throws ParseException {
     jj_consume_token(COMMA);
     Exp();
+  }
+
+  static final public void Id() throws ParseException {
+    jj_consume_token(ID);
   }
 
   static private boolean jj_initialized_once = false;
