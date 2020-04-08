@@ -53,13 +53,8 @@ TOKEN : {
                  (
                     (<DIGIT>)* "." (<DIGIT>)+  // Or this
                   ) >
-    |   <#INTERGER : (<DIGIT>)+ > //  Maybe this is unnecessary
+    |   < #INTEGER : (<DIGIT>)+ > //  Maybe this is unnecessary
     
-    // The lexical issues
-    |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) >  // Expression migh be in parenthesis
-    |   <INTERGER_LITERAL : <ID> | <INTERGER> | <REAL> >  // Maybe necessary change id token
-    |   <OP : "&&" | "<" | "+" | "-" | "*"> // Tenho dúvida em usar isso
-
     // Necessary symbols
     |   <AND : "&&">
     |   <OR : "||">
@@ -84,6 +79,11 @@ TOKEN : {
     |   <DOT : ".">
     |   <COMMA : ",">
     |   <SEMI_COMMA : ";">
+
+	// The lexical issues
+    |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) >  // Expression migh be in parenthesis
+    // Integer has been replaced by the entire expression and the warning has been solved
+    |   <INTEGER_LITERAL : ((["0"-"9"])+) | <REAL> >  // Only numbers
 
 
 }
@@ -166,7 +166,7 @@ void Exp():	{  // Correction
 }{
 		<TRUE> Exp_Aux()
 	|	<FALSE> Exp_Aux()
-	|	<INTERGER_LITERAL> Exp_Aux()
+	|	<INTEGER_LITERAL> Exp_Aux()
 	|	Id() Exp_Aux()
 	|	<THIS> Exp_Aux()
 	|	LOOKAHEAD(2) <NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
@@ -176,7 +176,11 @@ void Exp():	{  // Correction
 }
 
 void Exp_Aux():	{}{
-		<OP> Exp() Exp_Aux()
+		<AND> Exp() Exp_Aux()
+	|	<OR> Exp() Exp_Aux()
+	|	<PLUS> Exp() Exp_Aux()
+	|	<MINUS> Exp() Exp_Aux()
+	|	<TIMES> Exp() Exp_Aux()
 	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
 	|	LOOKAHEAD(2) <DOT> <LENGTH> Exp_Aux()
 	|	<DOT> Id() <LPAREN> ExpList() <RPAREN> Exp_Aux()

@@ -53,53 +53,51 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int REAL = 22;
   /** RegularExpression Id. */
-  int INTERGER = 23;
+  int INTEGER = 23;
   /** RegularExpression Id. */
-  int ID = 24;
+  int AND = 24;
   /** RegularExpression Id. */
-  int INTERGER_LITERAL = 25;
+  int OR = 25;
   /** RegularExpression Id. */
-  int OP = 26;
+  int EQUAL = 26;
   /** RegularExpression Id. */
-  int AND = 27;
+  int LESS_THEN = 27;
   /** RegularExpression Id. */
-  int OR = 28;
+  int BIGGER_THEN = 28;
   /** RegularExpression Id. */
-  int EQUAL = 29;
+  int PLUS = 29;
   /** RegularExpression Id. */
-  int LESS_THEN = 30;
+  int MINUS = 30;
   /** RegularExpression Id. */
-  int BIGGER_THEN = 31;
+  int TIMES = 31;
   /** RegularExpression Id. */
-  int PLUS = 32;
+  int BAR = 32;
   /** RegularExpression Id. */
-  int MINUS = 33;
+  int LPAREN = 33;
   /** RegularExpression Id. */
-  int TIMES = 34;
+  int RPAREN = 34;
   /** RegularExpression Id. */
-  int BAR = 35;
+  int LBRACE = 35;
   /** RegularExpression Id. */
-  int LPAREN = 36;
+  int RBRACE = 36;
   /** RegularExpression Id. */
-  int RPAREN = 37;
+  int RBRACE_INTER = 37;
   /** RegularExpression Id. */
-  int LBRACE = 38;
+  int LCOLCH = 38;
   /** RegularExpression Id. */
-  int RBRACE = 39;
+  int RCOLCH = 39;
   /** RegularExpression Id. */
-  int RBRACE_INTER = 40;
+  int BANG = 40;
   /** RegularExpression Id. */
-  int LCOLCH = 41;
+  int DOT = 41;
   /** RegularExpression Id. */
-  int RCOLCH = 42;
+  int COMMA = 42;
   /** RegularExpression Id. */
-  int BANG = 43;
+  int SEMI_COMMA = 43;
   /** RegularExpression Id. */
-  int DOT = 44;
+  int ID = 44;
   /** RegularExpression Id. */
-  int COMMA = 45;
-  /** RegularExpression Id. */
-  int SEMI_COMMA = 46;
+  int INTEGER_LITERAL = 45;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -129,10 +127,7 @@ public interface ParserConstants {
     "<LETTER>",
     "<DIGIT>",
     "<REAL>",
-    "<INTERGER>",
-    "<ID>",
-    "<INTERGER_LITERAL>",
-    "<OP>",
+    "<INTEGER>",
     "\"&&\"",
     "\"||\"",
     "\"=\"",
@@ -153,6 +148,8 @@ public interface ParserConstants {
     "\".\"",
     "\",\"",
     "\";\"",
+    "<ID>",
+    "<INTEGER_LITERAL>",
     "\" \"",
     "\"\\t\"",
     "\"\\n\"",

@@ -161,8 +161,8 @@ void Program() throws ParseException {
       case PRINT:
       case IF:
       case WHILE:
-      case ID:
-      case LBRACE:{
+      case LBRACE:
+      case ID:{
         ;
         break;
         }
@@ -249,8 +249,8 @@ void Program() throws ParseException {
         case PRINT:
         case IF:
         case WHILE:
-        case ID:
-        case LBRACE:{
+        case LBRACE:
+        case ID:{
           ;
           break;
           }
@@ -326,8 +326,8 @@ void Program() throws ParseException {
       Exp_Aux();
       break;
       }
-    case INTERGER_LITERAL:{
-      jj_consume_token(INTERGER_LITERAL);
+    case INTEGER_LITERAL:{
+      jj_consume_token(INTEGER_LITERAL);
       Exp_Aux();
       break;
       }
@@ -384,8 +384,32 @@ void Program() throws ParseException {
 
   static final public void Exp_Aux() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case OP:{
-      jj_consume_token(OP);
+    case AND:{
+      jj_consume_token(AND);
+      Exp();
+      Exp_Aux();
+      break;
+      }
+    case OR:{
+      jj_consume_token(OR);
+      Exp();
+      Exp_Aux();
+      break;
+      }
+    case PLUS:{
+      jj_consume_token(PLUS);
+      Exp();
+      Exp_Aux();
+      break;
+      }
+    case MINUS:{
+      jj_consume_token(MINUS);
+      Exp();
+      Exp_Aux();
+      break;
+      }
+    case TIMES:{
+      jj_consume_token(TIMES);
       Exp();
       Exp_Aux();
       break;
@@ -428,10 +452,10 @@ void Program() throws ParseException {
     case NEW:
     case TRUE:
     case FALSE:
-    case ID:
-    case INTERGER_LITERAL:
     case LPAREN:
-    case BANG:{
+    case BANG:
+    case ID:
+    case INTEGER_LITERAL:{
       Exp();
       label_10:
       while (true) {
@@ -513,7 +537,7 @@ void Program() throws ParseException {
     jj_scanpos = xsp;
     if (jj_scan_token(11)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(24)) return true;
+    if (jj_scan_token(44)) return true;
     }
     }
     }
@@ -522,7 +546,7 @@ void Program() throws ParseException {
 
   static private boolean jj_3_2()
  {
-    if (jj_scan_token(24)) return true;
+    if (jj_scan_token(44)) return true;
     if (jj_scan_token(LCOLCH)) return true;
     return false;
   }
@@ -530,7 +554,14 @@ void Program() throws ParseException {
   static private boolean jj_3R_11()
  {
     if (jj_3R_12()) return true;
-    if (jj_scan_token(24)) return true;
+    if (jj_scan_token(44)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_5()
+ {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(LENGTH)) return true;
     return false;
   }
 
@@ -543,7 +574,7 @@ void Program() throws ParseException {
 
   static private boolean jj_3_3()
  {
-    if (jj_scan_token(24)) return true;
+    if (jj_scan_token(44)) return true;
     if (jj_scan_token(EQUAL)) return true;
     return false;
   }
@@ -551,13 +582,6 @@ void Program() throws ParseException {
   static private boolean jj_3_1()
  {
     if (jj_3R_11()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_5()
- {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_scan_token(LENGTH)) return true;
     return false;
   }
 
@@ -581,10 +605,10 @@ void Program() throws ParseException {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20,0x1002800,0x2,0x1002800,0x2,0x40,0x1050080,0x0,0x1002800,0x1002800,0x1050080,0x50080,0x1000000,0x300c100,0x200,0x4000000,0x0,0x0,0x300c300,};
+      jj_la1_0 = new int[] {0x20,0x2800,0x2,0x2800,0x2,0x40,0x50080,0x0,0x2800,0x2800,0x50080,0x50080,0x0,0xc100,0x200,0xe3000000,0x0,0x0,0xc300,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x40,0x40,0x2000,0x0,0x0,0x40,0x40,0x0,0x0,0x810,0x200,0x1000,0x2000,0x810,};
+      jj_la1_1 = new int[] {0x0,0x1000,0x0,0x1000,0x0,0x8,0x1008,0x400,0x1000,0x1000,0x1008,0x8,0x1000,0x3000,0x102,0x40,0x200,0x400,0x3102,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[5];
   static private boolean jj_rescan = false;
@@ -792,7 +816,7 @@ void Program() throws ParseException {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[51];
+    boolean[] la1tokens = new boolean[50];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -809,7 +833,7 @@ void Program() throws ParseException {
         }
       }
     }
-    for (int i = 0; i < 51; i++) {
+    for (int i = 0; i < 50; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
