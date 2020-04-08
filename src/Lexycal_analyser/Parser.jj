@@ -132,7 +132,7 @@ void VarDecl():	{}{
 void MethodDecl():	{}{
 	<PUBLIC> Type() Id()
 	<LPAREN> FormalList() <RPAREN>
-	<LBRACE> (VarDecl())* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
+	<LBRACE> ( LOOKAHEAD(2) VarDecl())* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
 }
 
 void FormalList():	{}{
@@ -144,7 +144,7 @@ void FormalRest():	{}{
 }
 
 void Type():	{}{
-		Id() <LCOLCH> <RCOLCH>
+		LOOKAHEAD(2) Id() <LCOLCH> <RCOLCH> // Warning correction:I think that its the line of the earlier expansion
 	|	<BOOLEAN> 
 	|	<INT> 
 	|	Id()
@@ -157,7 +157,7 @@ void Statement():	{  // Dúvida
 	|	<IF> Statement() <ELSE> Statement()
 	|	<WHILE> <LPAREN> Exp() <RPAREN> Statement()
 	|	<PRINT> <LPAREN> Exp() <RPAREN> <SEMI_COMMA>
-	|	Id() <EQUAL> Exp() <SEMI_COMMA>
+	|	LOOKAHEAD(2) Id() <EQUAL> Exp() <SEMI_COMMA>
 	|	Id() <LCOLCH> Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
 }
 
@@ -169,7 +169,7 @@ void Exp():	{  // Correction
 	|	<INTERGER_LITERAL> Exp_Aux()
 	|	Id() Exp_Aux()
 	|	<THIS> Exp_Aux()
-	|	<NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
+	|	LOOKAHEAD(2) <NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
 	|	<NEW> Id() <LPAREN> <RPAREN> Exp_Aux()
 	|	<LPAREN> Exp() <RPAREN> Exp_Aux()
 	|	<BANG> Exp() Exp_Aux()
@@ -178,7 +178,7 @@ void Exp():	{  // Correction
 void Exp_Aux():	{}{
 		<OP> Exp() Exp_Aux()
 	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
-	|	<DOT> <LENGTH> Exp_Aux()
+	|	LOOKAHEAD(2) <DOT> <LENGTH> Exp_Aux()
 	|	<DOT> Id() <LPAREN> ExpList() <RPAREN> Exp_Aux()
 	|	{}
 }
