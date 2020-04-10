@@ -57,47 +57,41 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int AND = 24;
   /** RegularExpression Id. */
-  int OR = 25;
+  int EQUAL = 25;
   /** RegularExpression Id. */
-  int EQUAL = 26;
+  int LESS_THEN = 26;
   /** RegularExpression Id. */
-  int LESS_THEN = 27;
+  int PLUS = 27;
   /** RegularExpression Id. */
-  int BIGGER_THEN = 28;
+  int MINUS = 28;
   /** RegularExpression Id. */
-  int PLUS = 29;
+  int TIMES = 29;
   /** RegularExpression Id. */
-  int MINUS = 30;
+  int LPAREN = 30;
   /** RegularExpression Id. */
-  int TIMES = 31;
+  int RPAREN = 31;
   /** RegularExpression Id. */
-  int BAR = 32;
+  int LBRACE = 32;
   /** RegularExpression Id. */
-  int LPAREN = 33;
+  int RBRACE = 33;
   /** RegularExpression Id. */
-  int RPAREN = 34;
+  int RBRACE_INTER = 34;
   /** RegularExpression Id. */
-  int LBRACE = 35;
+  int LCOLCH = 35;
   /** RegularExpression Id. */
-  int RBRACE = 36;
+  int RCOLCH = 36;
   /** RegularExpression Id. */
-  int RBRACE_INTER = 37;
+  int BANG = 37;
   /** RegularExpression Id. */
-  int LCOLCH = 38;
+  int DOT = 38;
   /** RegularExpression Id. */
-  int RCOLCH = 39;
+  int COMMA = 39;
   /** RegularExpression Id. */
-  int BANG = 40;
+  int SEMI_COMMA = 40;
   /** RegularExpression Id. */
-  int DOT = 41;
+  int ID = 41;
   /** RegularExpression Id. */
-  int COMMA = 42;
-  /** RegularExpression Id. */
-  int SEMI_COMMA = 43;
-  /** RegularExpression Id. */
-  int ID = 44;
-  /** RegularExpression Id. */
-  int INTEGER_LITERAL = 45;
+  int INTEGER_LITERAL = 42;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -129,14 +123,11 @@ public interface ParserConstants {
     "<REAL>",
     "<INTEGER>",
     "\"&&\"",
-    "\"||\"",
     "\"=\"",
     "\"<\"",
-    "\">\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",
-    "\"/\"",
     "\"(\"",
     "\")\"",
     "\"{\"",

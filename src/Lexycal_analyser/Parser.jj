@@ -18,34 +18,34 @@ PARSER_END(Parser)
 
 TOKEN : {   
     // Bold keywords from book
-        <PUBLIC : "public"> // Lowercase pattern
-    |   <STATIC : "static">
-    |   <VOID : "void">
-    |   <MAIN : "main">
+        <PUBLIC : "public"> {System.out.println("PUBLIC ");}// Lowercase pattern
+    |   <STATIC : "static"> {System.out.println("STATIC ");}
+    |   <VOID : "void"> {System.out.println("VOID ");}
+    |   <MAIN : "main"> {System.out.println("MAIN ");}
 
-    |   <CLASS : "class">
-    |   <EXTENDS : "extends">
+    |   <CLASS : "class"> {System.out.println("CLASS ");}
+    |   <EXTENDS : "extends"> {System.out.println("EXTENDS ");}
 
-    |   <PRINT : "System.out.println">
+    |   <PRINT : "System.out.println"> {System.out.println("PRINT ");}
 
-    |   <THIS : "this">
-    |   <NEW : "new">
-    |   <STRING : "String"> 
-    |   <INT: "int">
-    |   <RETURN : "return">
+    |   <THIS : "this"> {System.out.println("THIS ");}
+    |   <NEW : "new"> {System.out.println("NEW ");}
+    |   <STRING : "String"> {System.out.println("STRING ");}
+    |   <INT: "int"> {System.out.println("INT ");}
+    |   <RETURN : "return"> {System.out.println("RETURN ");}
 
-    |   <BOOLEAN: "boolean">
-    |   <TRUE : "true">
-    |   <FALSE : "false">
+    |   <BOOLEAN: "boolean"> {System.out.println("BOOLEAN ");}
+    |   <TRUE : "true"> {System.out.println("TRUE ");}
+    |   <FALSE : "false"> {System.out.println("FALSE ");}
 
-    |   <IF : "if">
-    |   <ELSE : "else">
-    |   <WHILE : "while">
+    |   <IF : "if"> {System.out.println("IF ");}
+    |   <ELSE : "else"> {System.out.println("ELSE ");}
+    |   <WHILE : "while"> {System.out.println("WHILE ");}
 
-    |   <LENGTH : "length">
+    |   <LENGTH : "length"> {System.out.println("LENGHT ");}
 
     // Some local tokens necessary bellow
-    |   <#LETTER : ["A" - "Z"]["a"-"b"] > 
+    |   <#LETTER : (["A" - "Z"] | ["a"-"z"]) >
     |   <#DIGIT : ["0"-"9"] >
     |   <#REAL : (
                     (<DIGIT>)+ "." (<DIGIT>)*  // Real numbers can be like this way
@@ -56,34 +56,34 @@ TOKEN : {
     |   < #INTEGER : (<DIGIT>)+ > //  Maybe this is unnecessary
     
     // Necessary symbols
-    |   <AND : "&&">
-    |   <OR : "||">
-    |   <EQUAL : "=">
+    |   <AND : "&&"> {System.out.println("AND ");}
+    // |   <OR : "||"> {System.out.println("OR ");}
+    |   <EQUAL : "="> {System.out.println("EQUAL ");}
 
-    |   <LESS_THEN : "<">
-    |   <BIGGER_THEN : ">">
-    |   <PLUS : "+">
-    |   <MINUS : "-">
-    |   <TIMES : "*">
-    |   <BAR : "/">
+    |   <LESS_THEN : "<"> {System.out.println("LESS_THEN ");}
+    // |   <BIGGER_THEN : ">"> {System.out.println("BIGGER_THEN ");}
+    |   <PLUS : "+"> {System.out.println("PLUSS ");}
+    |   <MINUS : "-"> {System.out.println("MINUS ");}
+    |   <TIMES : "*"> {System.out.println("TIMES ");}
+    // |   <BAR : "/"> {System.out.println("BAR ");}
 
-    |   <LPAREN : "(">
-    |   <RPAREN : ")">
-    |   <LBRACE : "{">
-    |   <RBRACE : "}">
-    |   <RBRACE_INTER : ")?">
-    |   <LCOLCH : "[">
-    |   <RCOLCH : "]">
+    |   <LPAREN : "("> {System.out.println("LPAREN ");}
+    |   <RPAREN : ")"> {System.out.println("RPAREN ");}
+    |   <LBRACE : "{"> {System.out.println("LBRACE ");}
+    |   <RBRACE : "}"> {System.out.println("RBRACE ");}
+    |   <RBRACE_INTER : ")?"> {System.out.println("RBRACE_INTER ");}
+    |   <LCOLCH : "["> {System.out.println("LCOLCH ");}
+    |   <RCOLCH : "]"> {System.out.println("RCOLCH ");}
 
-    |   <BANG : "!">
-    |   <DOT : ".">
-    |   <COMMA : ",">
-    |   <SEMI_COMMA : ";">
+    |   <BANG : "!"> {System.out.println("BANG ");}
+    |   <DOT : "."> {System.out.println("DOT ");}
+    |   <COMMA : ","> {System.out.println("COMMA ");}
+    |   <SEMI_COMMA : ";"> {System.out.println("SEMI_COMMA ");}
 
 	// The lexical issues
-    |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) >  // Expression migh be in parenthesis
+    |   <ID: ( <LETTER>(<LETTER> | <DIGIT> | "-")* ) > {System.out.println("ID ");}  // Expression migh be in parenthesis
     // Integer has been replaced by the entire expression and the warning has been solved
-    |   <INTEGER_LITERAL : ((["0"-"9"])+) | <REAL> >  // Only numbers
+    |   <INTEGER_LITERAL : ((["0"-"9"])+) | <REAL> > {System.out.println("INTEGER_LITERAL ");}  // Only numbers
 
 
 }
@@ -95,9 +95,10 @@ SKIP : {
 
 // Por enquanto retornam apenas void
 
-void Program():	{}{
+void S():	{}{
 	MainClass() 
 	(ClassDecl())*
+	<EOF>
 }
 
 void MainClass():	{}{
@@ -177,7 +178,7 @@ void Exp():	{  // Correction
 
 void Exp_Aux():	{}{
 		<AND> Exp() Exp_Aux()
-	|	<OR> Exp() Exp_Aux()
+	//|	<OR> Exp() Exp_Aux()
 	|	<PLUS> Exp() Exp_Aux()
 	|	<MINUS> Exp() Exp_Aux()
 	|	<TIMES> Exp() Exp_Aux()

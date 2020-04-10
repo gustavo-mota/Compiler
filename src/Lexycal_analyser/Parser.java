@@ -13,7 +13,7 @@ public class Parser implements ParserConstants {
 
 // Por enquanto retornam apenas void
   static final public 
-void Program() throws ParseException {
+void S() throws ParseException {
     MainClass();
     label_1:
     while (true) {
@@ -28,6 +28,7 @@ void Program() throws ParseException {
       }
       ClassDecl();
     }
+    jj_consume_token(0);
   }
 
   static final public void MainClass() throws ParseException {
@@ -390,12 +391,6 @@ void Program() throws ParseException {
       Exp_Aux();
       break;
       }
-    case OR:{
-      jj_consume_token(OR);
-      Exp();
-      Exp_Aux();
-      break;
-      }
     case PLUS:{
       jj_consume_token(PLUS);
       Exp();
@@ -527,34 +522,10 @@ void Program() throws ParseException {
     finally { jj_save(4, xla); }
   }
 
-  static private boolean jj_3R_12()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(13)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(11)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(44)) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_2()
- {
-    if (jj_scan_token(44)) return true;
-    if (jj_scan_token(LCOLCH)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_11()
  {
     if (jj_3R_12()) return true;
-    if (jj_scan_token(44)) return true;
+    if (jj_scan_token(41)) return true;
     return false;
   }
 
@@ -574,7 +545,7 @@ void Program() throws ParseException {
 
   static private boolean jj_3_3()
  {
-    if (jj_scan_token(44)) return true;
+    if (jj_scan_token(41)) return true;
     if (jj_scan_token(EQUAL)) return true;
     return false;
   }
@@ -582,6 +553,30 @@ void Program() throws ParseException {
   static private boolean jj_3_1()
  {
     if (jj_3R_11()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_12()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(13)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(11)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(41)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_2()
+ {
+    if (jj_scan_token(41)) return true;
+    if (jj_scan_token(LCOLCH)) return true;
     return false;
   }
 
@@ -605,10 +600,10 @@ void Program() throws ParseException {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20,0x2800,0x2,0x2800,0x2,0x40,0x50080,0x0,0x2800,0x2800,0x50080,0x50080,0x0,0xc100,0x200,0xe3000000,0x0,0x0,0xc300,};
+      jj_la1_0 = new int[] {0x20,0x2800,0x2,0x2800,0x2,0x40,0x50080,0x0,0x2800,0x2800,0x50080,0x50080,0x0,0xc100,0x40000200,0x39000000,0x0,0x0,0x4000c300,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x1000,0x0,0x1000,0x0,0x8,0x1008,0x400,0x1000,0x1000,0x1008,0x8,0x1000,0x3000,0x102,0x40,0x200,0x400,0x3102,};
+      jj_la1_1 = new int[] {0x0,0x200,0x0,0x200,0x0,0x1,0x201,0x80,0x200,0x200,0x201,0x1,0x200,0x600,0x20,0x8,0x40,0x80,0x620,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[5];
   static private boolean jj_rescan = false;
@@ -816,7 +811,7 @@ void Program() throws ParseException {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[50];
+    boolean[] la1tokens = new boolean[47];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -833,7 +828,7 @@ void Program() throws ParseException {
         }
       }
     }
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 47; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
