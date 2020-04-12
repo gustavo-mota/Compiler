@@ -137,6 +137,7 @@ void S() throws ParseException {
   static final public void VarDecl() throws ParseException {
     Type();
     Id();
+    jj_consume_token(SEMI_COMMA);
   }
 
   static final public void MethodDecl() throws ParseException {
@@ -266,6 +267,9 @@ void S() throws ParseException {
       }
     case IF:{
       jj_consume_token(IF);
+      jj_consume_token(LPAREN);
+      Exp();
+      jj_consume_token(RPAREN);
       Statement();
       jj_consume_token(ELSE);
       Statement();
@@ -522,6 +526,30 @@ void S() throws ParseException {
     finally { jj_save(4, xla); }
   }
 
+  static private boolean jj_3R_12()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(13)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(11)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(41)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_2()
+ {
+    if (jj_scan_token(41)) return true;
+    if (jj_scan_token(LCOLCH)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_11()
  {
     if (jj_3R_12()) return true;
@@ -553,30 +581,6 @@ void S() throws ParseException {
   static private boolean jj_3_1()
  {
     if (jj_3R_11()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_12()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(13)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(11)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(41)) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_2()
- {
-    if (jj_scan_token(41)) return true;
-    if (jj_scan_token(LCOLCH)) return true;
     return false;
   }
 
