@@ -3,10 +3,10 @@
 ### Federal University of Ceara, Department of Computing, Course of Compiler Construction.
 
 ## Members:
-  - [Gustavo Sousa] (https://github.com/Gustavo-Sousa)
-  - [Evilásio Costa] (https://github.com/Evilasio797)
-  - [José de Assis] (https://github.com/JoseDeAssis)
-  - [Leyberson Assunção] (https://github.com/Leyberson)
+  - [Gustavo Sousa](https://github.com/Gustavo-Sousa)
+  - [Evilásio Costa](https://github.com/Evilasio797)
+  - [José de Assis](https://github.com/JoseDeAssis)
+  - [Leyberson Assunção](https://github.com/Leyberson/)
 
 ---
 
