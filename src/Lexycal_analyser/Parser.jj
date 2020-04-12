@@ -127,7 +127,7 @@ void ClassDecl_Aux():	{}{
 }
 
 void VarDecl():	{}{
-	Type() Id()
+	Type() Id() <SEMI_COMMA>
 }
 
 void MethodDecl():	{}{
@@ -155,7 +155,7 @@ void Statement():	{  // Dúvida
 	
 }{
 		<LBRACE> (Statement())* <RBRACE>
-	|	<IF> Statement() <ELSE> Statement()
+	|	<IF> <LPAREN> Exp() <RPAREN> Statement() <ELSE> Statement()
 	|	<WHILE> <LPAREN> Exp() <RPAREN> Statement()
 	|	<PRINT> <LPAREN> Exp() <RPAREN> <SEMI_COMMA>
 	|	LOOKAHEAD(2) Id() <EQUAL> Exp() <SEMI_COMMA>

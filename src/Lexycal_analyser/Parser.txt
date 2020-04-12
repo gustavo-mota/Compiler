@@ -1,0 +1,101 @@
+
+DOCUMENT START
+TOKENS
+<DEFAULT> TOKEN : {
+<PUBLIC: "public"> : {
+| <STATIC: "static"> : {
+| <VOID: "void"> : {
+| <MAIN: "main"> : {
+| <CLASS: "class"> : {
+| <EXTENDS: "extends"> : {
+| <PRINT: "System.out.println"> : {
+| <THIS: "this"> : {
+| <NEW: "new"> : {
+| <STRING: "String"> : {
+| <INT: "int"> : {
+| <RETURN: "return"> : {
+| <BOOLEAN: "boolean"> : {
+| <TRUE: "true"> : {
+| <FALSE: "false"> : {
+| <IF: "if"> : {
+| <ELSE: "else"> : {
+| <WHILE: "while"> : {
+| <LENGTH: "length"> : {
+| <#LETTER: ["A"-"Z"] | ["a"-"z"]>
+| <#DIGIT: ["0"-"9"]>
+| <#REAL: (<DIGIT>)+ "." (<DIGIT>)* | (<DIGIT>)* "." (<DIGIT>)+>
+| <#INTEGER: (<DIGIT>)+>
+| <AND: "&&"> : {
+| <EQUAL: "="> : {
+| <LESS_THEN: "<"> : {
+| <PLUS: "+"> : {
+| <MINUS: "-"> : {
+| <TIMES: "*"> : {
+| <LPAREN: "("> : {
+| <RPAREN: ")"> : {
+| <LBRACE: "{"> : {
+| <RBRACE: "}"> : {
+| <RBRACE_INTER: ")?"> : {
+| <LCOLCH: "["> : {
+| <RCOLCH: "]"> : {
+| <BANG: "!"> : {
+| <DOT: "."> : {
+| <COMMA: ","> : {
+| <SEMI_COMMA: ";"> : {
+| <ID: <LETTER> (<LETTER> | <DIGIT> | "-")*> : {
+| <INTEGER_LITERAL: (["0"-"9"])+ | <REAL>> : {
+}
+
+<DEFAULT> SKIP : {
+" "
+| "\t"
+| "\n"
+| "\r"
+}
+
+NON-TERMINALS
+// Por enquanto retornam apenas void
+	S	:=	MainClass ( ClassDecl )* <EOF>
+	MainClass	:=	<CLASS> Id <LBRACE> <PUBLIC> <STATIC> <VOID> <MAIN> <LPAREN> <STRING> <LCOLCH> <RCOLCH> Id <RPAREN> <LBRACE> Statement <RBRACE> <RBRACE>
+	ClassDecl	:=	<CLASS> Id ClassDecl_Aux
+	ClassDecl_Aux	:=	( <LBRACE> ( VarDecl )* ( MethodDecl )* <RBRACE> )
+		|	( <EXTENDS> Id <LBRACE> Id ( VarDecl )* ( MethodDecl )* <RBRACE> )
+		|	
+	VarDecl	:=	Type Id <SEMI_COMMA>
+	MethodDecl	:=	<PUBLIC> Type Id <LPAREN> FormalList <RPAREN> <LBRACE> ( VarDecl )* ( Statement )* <RETURN> Exp <SEMI_COMMA> <RBRACE>
+	FormalList	:=	Type Id ( FormalRest )*
+		|	
+	FormalRest	:=	<COMMA> Type Id
+	Type	:=	Id <LCOLCH> <RCOLCH>
+		|	<BOOLEAN>
+		|	<INT>
+		|	Id
+	Statement	:=	<LBRACE> ( Statement )* <RBRACE>
+		|	<IF> <LPAREN> Exp <RPAREN> Statement <ELSE> Statement
+		|	<WHILE> <LPAREN> Exp <RPAREN> Statement
+		|	<PRINT> <LPAREN> Exp <RPAREN> <SEMI_COMMA>
+		|	Id <EQUAL> Exp <SEMI_COMMA>
+		|	Id <LCOLCH> Exp <RCOLCH> <EQUAL> Exp <SEMI_COMMA>
+	Exp	:=	<TRUE> Exp_Aux
+		|	<FALSE> Exp_Aux
+		|	<INTEGER_LITERAL> Exp_Aux
+		|	Id Exp_Aux
+		|	<THIS> Exp_Aux
+		|	<NEW> <INT> <LCOLCH> Exp <RCOLCH> Exp_Aux
+		|	<NEW> Id <LPAREN> <RPAREN> Exp_Aux
+		|	<LPAREN> Exp <RPAREN> Exp_Aux
+		|	<BANG> Exp Exp_Aux
+	Exp_Aux	:=	<AND> Exp Exp_Aux
+		|	<PLUS> Exp Exp_Aux
+		|	<MINUS> Exp Exp_Aux
+		|	<TIMES> Exp Exp_Aux
+		|	<LCOLCH> Exp <RCOLCH> Exp_Aux
+		|	<DOT> <LENGTH> Exp_Aux
+		|	<DOT> Id <LPAREN> ExpList <RPAREN> Exp_Aux
+		|	
+	ExpList	:=	Exp ( ExpRest )*
+		|	
+	ExpRest	:=	<COMMA> Exp
+	Id	:=	<ID>
+
+DOCUMENT END
