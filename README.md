@@ -17,7 +17,7 @@ You need [Java](https://www.oracle.com/java/technologies/javase-downloads.html) 
 ---
 
 ## Phases:
-### 1. [Lexycal Analyser and Parser Phase](analisador_lexico/)
+### 1. [Lexycal Analyser and Parser Phase](src/Lexycal_analyser/)
 
 Build a lexycal analyser and parser for the grammar specified in the course book.
 
