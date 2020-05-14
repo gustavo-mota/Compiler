@@ -195,8 +195,6 @@ void ExpRest():	{}{
 	<COMMA> Exp()
 }
 
-Token Id():	{  // Token or int
-	Token t;
-}{  // Declared and struture
-	t=<ID> { return lookup(t.image);}  // acho que esta certo
+Token Id():	{}{
+	<ID>
 }
