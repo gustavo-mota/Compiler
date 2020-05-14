@@ -482,8 +482,12 @@ void S() throws ParseException {
     Exp();
   }
 
-  static final public void Id() throws ParseException {
-    jj_consume_token(ID);
+  static final public Token Id() throws ParseException {// Token or int
+        Token t;
+    // Declared and struture
+            t = jj_consume_token(ID);
+{if ("" != null) return lookup(t.image);}
+    throw new Error("Missing return statement in function");
   }
 
   static private boolean jj_2_1(int xla)
@@ -526,34 +530,10 @@ void S() throws ParseException {
     finally { jj_save(4, xla); }
   }
 
-  static private boolean jj_3R_12()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(13)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(11)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(41)) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_2()
- {
-    if (jj_scan_token(41)) return true;
-    if (jj_scan_token(LCOLCH)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_11()
  {
+    if (jj_3R_13()) return true;
     if (jj_3R_12()) return true;
-    if (jj_scan_token(41)) return true;
     return false;
   }
 
@@ -564,6 +544,25 @@ void S() throws ParseException {
     return false;
   }
 
+  static private boolean jj_3_1()
+ {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_3()
+ {
+    if (jj_3R_12()) return true;
+    if (jj_scan_token(EQUAL)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_14()
+ {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
   static private boolean jj_3_4()
  {
     if (jj_scan_token(NEW)) return true;
@@ -571,16 +570,33 @@ void S() throws ParseException {
     return false;
   }
 
-  static private boolean jj_3_3()
+  static private boolean jj_3R_12()
  {
-    if (jj_scan_token(41)) return true;
-    if (jj_scan_token(EQUAL)) return true;
+    if (jj_scan_token(ID)) return true;
     return false;
   }
 
-  static private boolean jj_3_1()
+  static private boolean jj_3_2()
  {
-    if (jj_3R_11()) return true;
+    if (jj_3R_12()) return true;
+    if (jj_scan_token(LCOLCH)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_13()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(13)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(11)) {
+    jj_scanpos = xsp;
+    if (jj_3R_14()) return true;
+    }
+    }
+    }
     return false;
   }
 
