@@ -195,6 +195,6 @@ void ExpRest():	{}{
 	<COMMA> Exp()
 }
 
-Token Id():	{}{
+void Id():	{}{
 	<ID>
 }
