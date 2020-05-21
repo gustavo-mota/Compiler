@@ -21,7 +21,7 @@ You need [Java](https://www.oracle.com/java/technologies/javase-downloads.html) 
 
 Build a lexycal analyser and parser for the grammar specified in the course book.
 
-#### Status: Lexycal_Analyzer is done!
+#### Status: Lexycal_Analyzer is done! Parser with concrete syntax for semantic actions skipped. 
 
 #### Instructions:
 ```sh
@@ -35,4 +35,10 @@ $ java Parser ../test_files/minijava.java
 ```sh
 $ jjdoc -TEXT Parser.jj
 ```
+
+### 2. Semantic Actions Phase
+
+First: Construction of the abstract syntax tree for implement the semantic actions
+
+#### Status: First step started.
 
