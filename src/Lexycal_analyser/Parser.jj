@@ -93,71 +93,201 @@ SKIP : {
 
 // Doubt if the method has to have the same name of the node
 
-void S():	{}{  // Tenho dúvidas se isso deve continuar assim
-	MainClass() 
-	(ClassDecl())*
+Program S():	{
+    MainClass main;
+    ClassDecl class_decl;
+    ClassDeclList class_list = new ClassDeclList();
+}{  // Tenho dúvidas se isso deve continuar assim
+	main = MainClass() 
+	(class_decl = ClassDecl() { class_list.addElement(class_decl); })*
 	<EOF>
+    { return new Program(main, class_list); }
 }
 
-void MainClass():	{}{
+MainClass MainClass():	{
+    Identifier class_id, id;
+    Statement stm;
+}{
 	<CLASS>
-	Id()
-	<LBRACE> <PUBLIC> <STATIC> <VOID> <MAIN>
-	<LPAREN> <STRING> <LCOLCH> <RCOLCH> Id() <RPAREN>
-	<LBRACE> Statement() <RBRACE>
+	class_id = Id()
+	<LBRACE> 
+    <PUBLIC> <STATIC> <VOID> <MAIN>
+	<LPAREN> 
+    <STRING> <LCOLCH> <RCOLCH> id = Id() 
+    <RPAREN>
+	<LBRACE> stm = Statement() <RBRACE>
 	<RBRACE>
+    { return MainClass(class_id, id, stm)} // atention
 }
 
 void ClassDecl():	{  // Correction
-
+    Identifier id;
 }{ 
-	<CLASS> Id() ClassDecl_Aux()
+	<CLASS> 
+    id = Id() 
+    { return ClassDecl_Aux(id); } // atention
 
 }
 
-void ClassDecl_Aux():	{}{
-		(<LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>)
-	|	(
-		<EXTENDS> Id() 
-		<LBRACE> Id() (VarDecl())* (MethodDecl())* <RBRACE>
-		)
-	|	{}  // Empty definition
-}
-
-void VarDecl():	{}{
-	Type() Id() <SEMI_COMMA>
-}
-
-void MethodDecl():	{}{
-	<PUBLIC> Type() Id()
-	<LPAREN> FormalList() <RPAREN>
-	<LBRACE> ( LOOKAHEAD(2) VarDecl())* (Statement())* <RETURN> Exp() <SEMI_COMMA> <RBRACE>
-}
-
-void FormalList():	{}{
-	Type() Id() (FormalRest())* | {}
-}
-
-void FormalRest():	{}{
-	<COMMA> Type() Id()
-}
-
-void Type():	{}{
-		LOOKAHEAD(2) Id() <LCOLCH> <RCOLCH> // Warning correction:I think that its the line of the earlier expansion
-	|	<BOOLEAN> 
-	|	<INT> 
-	|	Id()
-}
-
-void Statement():	{  // Dúvida
-	
+void ClassDecl_Aux(Identifier class_id):	{
+    VarDecl var_dcl;
+    VarDeclList var_list = new VarDeclList();
+    MethodDecl mth_dcl;
+    MethodDeclList mth_list;
+    Identifier ext_id, id;
 }{
-		<LBRACE> (Statement())* <RBRACE>
-	|	<IF> <LPAREN> Exp() <RPAREN> Statement() <ELSE> Statement()
-	|	<WHILE> <LPAREN> Exp() <RPAREN> Statement()
-	|	<PRINT> <LPAREN> Exp() <RPAREN> <SEMI_COMMA>
-	|	LOOKAHEAD(2) Id() <EQUAL> Exp() <SEMI_COMMA>
-	|	Id() <LCOLCH> Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
+		(
+            <LBRACE> 
+            ( var_dcl = VarDecl() { var_list.addElement(var_dcl); })* 
+            ( mth_dcl = MethodDecl() { mth_list.addElement(mth_dcl); })* 
+            <RBRACE>
+            { return new ClassDeclSimple(class_id, var_list, mth_list); }
+        )
+
+	|	(
+		    <EXTENDS> ext_id = Id() 
+		    <LBRACE> id = Id() 
+            ( var_dcl = VarDecl() { var_list.addElement(var_dcl); })* 
+            ( mth_dcl = MethodDecl() { mth_list.addElement(mth_dcl); })* 
+            <RBRACE>
+            { return new ClassDeclExtends(class_id, id, var_list, mth_list); }
+		)
+	|	{ return new ClassDeclSimple(class_id); }  // Empty definition
+}
+
+VarDecl VarDecl():	{
+    Type type;
+    Identifier id;
+}{
+	type = Type() 
+    id = Id()
+    <SEMI_COMMA>
+    { return new VarDecl(type, id); }
+}
+
+MethodDecl MethodDecl():	{
+    Type type;
+    Identifier id;
+    FormalList formal_list;
+    VarDecl var_dlc;
+    VarDeclList var_list = new VarDefinitionList();
+    Statement stm;
+    StatementList stm_list = new StatementList();
+    Expression exp;
+    ExpList exp_list = new ExpList();
+}{
+	<PUBLIC> 
+    type = Type() 
+    id = Id()
+	<LPAREN> 
+    formal_list = FormalList() 
+    <RPAREN>
+	<LBRACE> 
+
+    (   
+        LOOKAHEAD(2) 
+        var_dlc = VarDecl() { var_list.addElement(var_dlc); }
+    )*
+
+    ( stm = Statement() { stm_list.addElement(stm); })* 
+    <RETURN> 
+    exp = Exp()
+    <SEMI_COMMA> 
+    <RBRACE>
+    { return new MethodDecl( type, id, formal_list, var_list, stm_list, exp); }
+}
+
+void FormalList():	{ // doubt
+    FormalList formal_list = new FormalList();
+    Formal formal_head, formal_rest;
+    Identifier id;
+}{
+    	type = Type() 
+        id = Id() 
+        formal_head = new Formal(type, id)
+        { formal_list.addElement(formal_head); }
+        (formal_rest = FormalRest() { formal_list.addElement(formal_rest); })* 
+
+    | { return formal_list; }
+}
+
+Formal FormalRest():	{
+    Type type;
+    Identifier id;
+}{
+	<COMMA> 
+    type = Type() 
+    id = Id()
+    { return new Formal(type, id); }
+}
+
+Type Type():	{
+    Identifier id;
+}{
+		LOOKAHEAD(2) 
+        <INT> // was Id()
+        <LCOLCH> 
+        <RCOLCH> // Warning correction:I think that its the line of the earlier expansion
+        { return new Type(); }
+
+	|	<BOOLEAN> 
+        { return new BooleanType(); }
+
+	|	<INT> 
+        { return new IntegerType(); }
+
+	|	id = Id()
+        { return new IdentifierType(id); } // doubt if is correct
+}
+
+Statement Statement():	{  // Dúvida
+	Statement stm, else_stm;
+    Identifier id;
+    StatementList statement_list = new StatementList();
+    Expression exp, exp2;
+}{
+		<LBRACE> 
+        ( statement = Statement() { statement_list.addElement(statement); })* 
+        <RBRACE>
+
+	|	<IF> 
+        <LPAREN> 
+        exp = Exp() 
+        <RPAREN> 
+        stm = Statement() 
+        <ELSE> 
+        elsestm = Statement()
+        { return new If(exp, stm, elsestm); }
+
+	|	<WHILE> 
+        <LPAREN> 
+        exp = Exp()
+        <RPAREN>
+        stm = Statement()
+        { return new While(exp, stm); }
+
+	|	<PRINT> 
+        <LPAREN> 
+        exp = Exp() 
+        <RPAREN> 
+        <SEMI_COMMA>
+        { return new Print(exp); }
+
+	|	LOOKAHEAD(2) 
+        id = Id()   
+        <EQUAL> 
+        exp = Exp() 
+        <SEMI_COMMA>
+        { return new Assign(id, exp); }
+
+	|	id = Id() 
+        <LCOLCH> 
+        exp = Exp() 
+        <RCOLCH> 
+        <EQUAL> 
+        exp2 = Exp() 
+        <SEMI_COMMA>
+        { return new ArrayAssign(id, exp, exp2); }
 }
 
 Expression Exp():	{  
@@ -298,4 +428,4 @@ Expression ExpRest():	{
 Identifier Id():	{}{
 	<ID>
     { return new Identifier(token.image) }
-}
+}   
