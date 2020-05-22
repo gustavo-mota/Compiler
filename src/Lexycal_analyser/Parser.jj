@@ -16,7 +16,7 @@ PARSER_END(Parser)
 
 TOKEN : {   
     // Bold keywords from book
-        <PUBLIC : "public"> {System.out.println("PUBLIC ");}// Lowercase pattern
+        <PUBLIC : "public"> {System.out.println("PUBILC ");}// Lowercase pattern
     |   <STATIC : "static"> {System.out.println("STATIC ");}
     |   <VOID : "void"> {System.out.println("VOID ");}
     |   <MAIN : "main"> {System.out.println("MAIN ");}
@@ -91,7 +91,7 @@ SKIP : {
 }
 
 
-// Por enquanto retornam apenas void
+// Doubt if the method has to have the same name of the node
 
 void S():	{}{  // Tenho dúvidas se isso deve continuar assim
 	MainClass() 
@@ -160,41 +160,142 @@ void Statement():	{  // Dúvida
 	|	Id() <LCOLCH> Exp() <RCOLCH> <EQUAL> Exp() <SEMI_COMMA>
 }
 
-void Exp():	{  // Correction
+Expression Exp():	{  
+    IntegerLiteral integer; // exp
+    True true;
+    False false;
+    Identifier id, new_id;
+    This this;
+    Expression integer_exp, bang_exp, p_exp;
+    NewArray new_integer; // doubt if it's correct
+    NewObject new_obj;
+    Not not;
 
 }{
-		<TRUE> Exp_Aux()
-	|	<FALSE> Exp_Aux()
-	|	<INTEGER_LITERAL> Exp_Aux()
-	|	Id() Exp_Aux()
-	|	<THIS> Exp_Aux()
-	|	LOOKAHEAD(2) <NEW> <INT> <LCOLCH> Exp() <RCOLCH> Exp_Aux()
-	|	<NEW> Id() <LPAREN> <RPAREN> Exp_Aux()
-	|	<LPAREN> Exp() <RPAREN> Exp_Aux()
-	|	<BANG> Exp() Exp_Aux()
+		<TRUE> 
+        { true = new True(); }
+        { return Exp_Aux(true); }
+
+	|	<FALSE> 
+        { false = new False(); }
+        { return Exp_Aux(false); }
+
+	|	<INTEGER_LITERAL> 
+        { integer = new IntegerLiteral(Integer.parseInt(token.image)); }
+        { return Exp_Aux(integer); }
+
+	|	id = Id() // it's probably wrong
+        { id = IdentifierExp(id); }
+        { return Exp_Aux(id); }
+
+	|	<THIS> 
+        { this = This(); }
+        { return Exp_Aux(this); }
+
+	|	LOOKAHEAD(2) <NEW> <INT> 
+        <LCOLCH> 
+        integer_exp = Exp()
+        { new_integer = new NewArray(integer_exp); } // doubt here
+        <RCOLCH> 
+        { return Exp_Aux(new_integer); }
+
+	|	<NEW> 
+        new_id = Id()
+        { new_obj = new NewObject(new_id); }
+        <LPAREN> 
+        <RPAREN> 
+        { return Exp_Aux(new_obj); }
+
+	|	<LPAREN>
+        p_exp = Exp()
+        <RPAREN> 
+        { return Exp_Aux(p_exp); }
+
+	|	<BANG> 
+        bang_exp = Exp() 
+        { no = new No(bang_exp); }
+        { return Exp_Aux(no); }
 }
 
-void Exp_Aux():	{}{
-		<AND> Exp() Exp_Aux()
-	//|	<OR> Exp() Exp_Aux()
-	|	<PLUS> Exp() Exp_Aux()
-	|	<MINUS> Exp() Exp_Aux()
-	|	<TIMES> Exp() Exp_Aux()
-	|	<LCOLCH> Exp() <RCOLCH> Exp_Aux()
-	|	LOOKAHEAD(2) <DOT> <LENGTH> Exp_Aux()
-	|	<DOT> Id() <LPAREN> ExpList() <RPAREN> Exp_Aux()
-	|	{}
+// doubt with the exp_aux and use of object declaration atribution
+Expression Exp_Aux(Expression exp):	{
+    Expression exp_aux;
+    And ad;
+    Plus plus;
+    Minus minus;
+    Times times;
+    LessThan less; // absence
+    ArrayLookup array;
+    ArrayLength length;
+    Identifier id;
+    ExpList explist;
+    Call call;
+}{
+		<AND> 
+        exp_aux = Exp()
+        //exp_aux = Exp_Aux()
+        { ad = new And(exp, exp_aux); } // exp comes from call
+        { return Exp_Aux(ad); }
+
+	|	<PLUS>
+        exp_aux = Exp()
+        { plus = new Plus(exp, exp_aux); }
+        { return Exp_Aux(plus); }
+
+	|	<MINUS>
+        exp_aux = Exp() 
+        { minus = new Minus(exp, exp_aux); }
+        { return Exp_Aux(minus); }
+
+	|	<TIMES> 
+        exp_aux = Exp()
+        { times = new Times(exp, exp_aux); }
+        { return Exp_Aux(times); }
+
+	|	<LCOLCH>  // doubt if it's correct
+        exp_aux = Exp() 
+        { array = new ArrayLookup(exp, exp_aux); }
+        <RCOLCH> 
+        { return Exp_Aux(array); }
+
+	|	LOOKAHEAD(2) 
+        <DOT>
+        <LENGTH> 
+        { length = new ArrayLength(exp); }
+        { return Exp_Aux(exp); }
+
+	|	<DOT> 
+        id = Id() // atention
+        <LPAREN> 
+        explist = ExpList() // atention
+        <RPAREN> 
+        { call = new Call(exp, id, exp_aux); }
+        { return Exp_Aux(call); }
+
+	|	{ return exp; }
 }
 
-void ExpList():	{}{
-		Exp() (ExpRest())*
-	|	{}
+ExpList ExpList():	{
+    Expression exp_begin;
+    Expression exp_end;
+    ExpList explist = new ExpList();
+}{
+		( exp_begin = Exp() {explist.addElement(exp_begin);} )
+        ( exp_end = ExpRest() {explist.addElement(exp_end);} )*
+        { return explist; }
+	|	{ return explist; } // Before was void
 }
 
-void ExpRest():	{}{
-	<COMMA> Exp()
+Expression ExpRest():	{
+    Expression exp;
+}{
+	//<COMMA> Exp()
+    <COMMA> 
+    exp = Exp() // doubt whether to call a method or node
+    { return exp }
 }
 
-void Id():	{}{
+Identifier Id():	{}{
 	<ID>
+    { return new Identifier(token.image) }
 }
