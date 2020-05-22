@@ -120,7 +120,7 @@ MainClass MainClass():	{
     { return MainClass(class_id, id, stm)} // atention
 }
 
-void ClassDecl():	{  // Correction
+ClassDecl ClassDecl():	{  // Correction
     Identifier id;
 }{ 
 	<CLASS> 
@@ -129,7 +129,7 @@ void ClassDecl():	{  // Correction
 
 }
 
-void ClassDecl_Aux(Identifier class_id):	{
+ClassDecl ClassDecl_Aux(Identifier class_id):	{  // atention
     VarDecl var_dcl;
     VarDeclList var_list = new VarDeclList();
     MethodDecl mth_dcl;
@@ -170,7 +170,7 @@ MethodDecl MethodDecl():	{
     Identifier id;
     FormalList formal_list;
     VarDecl var_dlc;
-    VarDeclList var_list = new VarDefinitionList();
+    VarDeclList var_list = new VarDeclList();
     Statement stm;
     StatementList stm_list = new StatementList();
     Expression exp;
@@ -197,7 +197,7 @@ MethodDecl MethodDecl():	{
     { return new MethodDecl( type, id, formal_list, var_list, stm_list, exp); }
 }
 
-void FormalList():	{ // doubt
+Formal FormalList():	{ // doubt
     FormalList formal_list = new FormalList();
     Formal formal_head, formal_rest;
     Identifier id;
@@ -228,7 +228,8 @@ Type Type():	{
         <INT> // was Id()
         <LCOLCH> 
         <RCOLCH> // Warning correction:I think that its the line of the earlier expansion
-        { return new Type(); }
+        //{ return new Type(); }
+        { return IntArrayType(); }
 
 	|	<BOOLEAN> 
         { return new BooleanType(); }
@@ -249,6 +250,7 @@ Statement Statement():	{  // Dúvida
 		<LBRACE> 
         ( statement = Statement() { statement_list.addElement(statement); })* 
         <RBRACE>
+        { return new Block(statement_list); }
 
 	|	<IF> 
         <LPAREN> 
@@ -428,4 +430,4 @@ Expression ExpRest():	{
 Identifier Id():	{}{
 	<ID>
     { return new Identifier(token.image) }
-}   
+}       
