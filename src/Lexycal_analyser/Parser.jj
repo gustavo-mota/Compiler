@@ -58,7 +58,7 @@ TOKEN : {
     // |   <OR : "||"> {System.out.println("OR ");}
     |   <EQUAL : "="> {System.out.println("EQUAL ");}
 
-    |   <LESS_THEN : "<"> {System.out.println("LESS_THEN ");}
+    |   <LESS_THAN : "<"> {System.out.println("LESS_THAN ");}
     // |   <BIGGER_THEN : ">"> {System.out.println("BIGGER_THEN ");}
     |   <PLUS : "+"> {System.out.println("PLUSS ");}
     |   <MINUS : "-"> {System.out.println("MINUS ");}
@@ -206,7 +206,8 @@ Formal FormalList():	{ // doubt
         id = Id() 
         formal_head = new Formal(type, id)
         { formal_list.addElement(formal_head); }
-        (formal_rest = FormalRest() { formal_list.addElement(formal_rest); })* 
+        (formal_rest = FormalRest() { formal_list.addElement(formal_rest); })*
+        { return formal_list; } 
 
     | { return formal_list; }
 }
@@ -241,7 +242,7 @@ Type Type():	{
         { return new IdentifierType(id); } // doubt if is correct
 }
 
-Statement Statement():	{  // Dúvida
+Statement Statement():	{ 
 	Statement stm, else_stm;
     Identifier id;
     StatementList statement_list = new StatementList();
@@ -275,7 +276,7 @@ Statement Statement():	{  // Dúvida
         <SEMI_COMMA>
         { return new Print(exp); }
 
-	|	LOOKAHEAD(2) 
+	|	LOOKAHEAD(2)
         id = Id()   
         <EQUAL> 
         exp = Exp() 
@@ -368,6 +369,11 @@ Expression Exp_Aux(Expression exp):	{
         //exp_aux = Exp_Aux()
         { ad = new And(exp, exp_aux); } // exp comes from call
         { return Exp_Aux(ad); }
+
+    |   <LESS_THAN>
+        exp_aux = Exp()
+        { less = new LessThan(exp, exp_aux); }
+        { return Exp_Aux(less); }
 
 	|	<PLUS>
         exp_aux = Exp()

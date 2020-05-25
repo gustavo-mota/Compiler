@@ -39,6 +39,8 @@ $ jjdoc -TEXT Parser.jj
 ### 2. Semantic Actions Phase
 
 First: Construction of the abstract syntax tree for implement the semantic actions
+Second: Construction of the symbol table
+Third: Implementation of the type checking.
 
-#### Status: First step started.
+#### Status: All semantic actions done.
 
