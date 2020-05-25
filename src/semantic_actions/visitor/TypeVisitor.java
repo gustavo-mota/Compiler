@@ -1,7 +1,7 @@
-package Semantic_actions.visitor;
+package semantic_actions.visitor;
 
 //import Semantic_actions.syntax_tree.*;
-import Semantic_actions.syntax_tree.*;
+import semantic_actions.syntax_tree.*;
 //Alguns mtodos diferem no nome
 //Alguns mtodos n est no git, e vice-versa
 

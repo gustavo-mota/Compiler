@@ -1,7 +1,7 @@
-package Semantic_actions.syntax_tree;
+package semantic_actions.syntax_tree;
 
-import Semantic_actions.visitor.*;
-//import Semantic_actions.visitor.*;
+import semantic_actions.visitor.*;
+//import semantic_actions.visitor.*;
 //import visitor.TypeVisitor;
 
 public class While extends Statement {

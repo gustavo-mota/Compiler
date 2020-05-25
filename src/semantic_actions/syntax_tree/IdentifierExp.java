@@ -1,5 +1,5 @@
-package Semantic_actions.syntax_tree;
-import Semantic_actions.visitor.*;
+package semantic_actions.syntax_tree;
+import semantic_actions.visitor.*;
 //import visitor.TypeVisitor;
 
 public class IdentifierExp extends Exp {

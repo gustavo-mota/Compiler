@@ -1,6 +1,6 @@
-package Semantic_actions.visitor;
+package semantic_actions.visitor;
 
-import Semantic_actions.syntax_tree.*;
+import semantic_actions.syntax_tree.*;
 
 public class TypeDepthFirstVisitor implements TypeVisitor {
 
