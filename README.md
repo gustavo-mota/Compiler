@@ -17,7 +17,7 @@ You need [Java](https://www.oracle.com/java/technologies/javase-downloads.html) 
 ---
 
 ## Phases:
-### 1. [Lexycal Analyser and Parser Phase](src/Lexycal_analyser/)
+### 1. [Lexycal Analyser and Parser Phase](src/lexycal_analyser/)
 
 Build a lexycal analyser and parser for the grammar specified in the course book.
 
@@ -36,7 +36,7 @@ $ java Parser ../test_files/minijava.java
 $ jjdoc -TEXT Parser.jj
 ```
 
-### 2. Semantic Actions Phase
+### 2. [Semantic Actions Phase](src/semantic_actions/)
 
 - First: Construction of the abstract syntax tree for implement the semantic actions
 - Second: Construction of the symbol table
