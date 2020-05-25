@@ -17,21 +17,23 @@ You need [Java](https://www.oracle.com/java/technologies/javase-downloads.html) 
 ---
 
 ## Phases:
-### 1. [Lexycal Analyser and Parser Phase](src/lexycal_analyser/)
+### 1. [Lexical Analyser and Parser Phase](src/lexical_analyser/)
 
-Build a lexycal analyser and parser for the grammar specified in the course book.
+Build a lexical analyser and parser for the grammar specified in the course book.
 
-#### Status: Lexycal_Analyzer is done! Parser with concrete syntax for semantic actions skipped. 
+#### Status: lexical_Analyzer is done! Parser with concrete syntax for semantic actions skipped. 
+
+#### Attention: There was an implementation error in the grammar. Already corrected. 
 
 #### Instructions:
 ```sh
-$ cd src/Lexycal_Analyzer
+$ cd src/lexical_Analyzer
 $ javacc Parser.jj
 $ javac *.java
 $ java Parser ../test_files/minijava.java 
 ```
 
-#### Check the [grammar documentation](src/Lexycal_analyser/Parser.txt) with the comand:
+#### Check the [grammar documentation](src/lexical_analyser/Parser.txt) with the comand:
 ```sh
 $ jjdoc -TEXT Parser.jj
 ```
