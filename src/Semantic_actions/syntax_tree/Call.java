@@ -1,7 +1,7 @@
-package syntax_tree;
+package Semantic_actions.syntax_tree;
 
-import visitor.Visitor;
-import visitor.TypeVisitor;
+import Semantic_actions.visitor.*;
+//import visitor.TypeVisitor;
 
 public class Call extends Exp {
   public Exp e;

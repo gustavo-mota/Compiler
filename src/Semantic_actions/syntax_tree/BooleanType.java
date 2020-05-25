@@ -1,7 +1,7 @@
-package syntax_tree;
+package Semantic_actions.syntax_tree;
 
-import visitor.Visitor;
-import visitor.TypeVisitor;
+import Semantic_actions.visitor.*;
+//import visitor.TypeVisitor;
 
 public class BooleanType extends Type {
   public void accept(Visitor v) {

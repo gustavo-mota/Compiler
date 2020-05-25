@@ -1,4 +1,4 @@
-package syntax_tree;
+package Semantic_actions.syntax_tree;
 
 import java.util.Vector;
 

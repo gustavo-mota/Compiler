@@ -1,7 +1,8 @@
-package syntax_tree;
+package Semantic_actions.syntax_tree;
 
-import visitor.Visitor;
-import visitor.TypeVisitor;
+import Semantic_actions.visitor.*;
+//import Semantic_actions.visitor.*;
+//import visitor.TypeVisitor;
 
 public class While extends Statement {
   public Exp e;

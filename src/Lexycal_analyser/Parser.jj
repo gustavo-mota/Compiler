@@ -1,5 +1,5 @@
 PARSER_BEGIN(Parser)
-
+import Semantic_actions.syntax_tree.*;
 public class Parser {
     public static void main(String[] args) {
         try {
@@ -117,7 +117,7 @@ MainClass MainClass():	{
     <RPAREN>
 	<LBRACE> stm = Statement() <RBRACE>
 	<RBRACE>
-    { return MainClass(class_id, id, stm)} // atention
+    { return MainClass(class_id, id, stm); } // atention
 }
 
 ClassDecl ClassDecl():	{  // Correction
@@ -204,7 +204,7 @@ Formal FormalList():	{ // doubt
 }{
     	type = Type() 
         id = Id() 
-        formal_head = new Formal(type, id)
+        { formal_head = new Formal(type, id); }
         { formal_list.addElement(formal_head); }
         (formal_rest = FormalRest() { formal_list.addElement(formal_rest); })*
         { return formal_list; } 
@@ -295,10 +295,10 @@ Statement Statement():	{
 
 Expression Exp():	{  
     IntegerLiteral integer; // exp
-    True true;
-    False false;
+    True tr;
+    False fs;
     Identifier id, new_id;
-    This this;
+    This th;
     Expression integer_exp, bang_exp, p_exp;
     NewArray new_integer; // doubt if it's correct
     NewObject new_obj;
@@ -306,12 +306,12 @@ Expression Exp():	{
 
 }{
 		<TRUE> 
-        { true = new True(); }
-        { return Exp_Aux(true); }
+        { tr = new True(); }
+        { return Exp_Aux(tr); }
 
 	|	<FALSE> 
-        { false = new False(); }
-        { return Exp_Aux(false); }
+        { fs = new False(); }
+        { return Exp_Aux(fs); }
 
 	|	<INTEGER_LITERAL> 
         { integer = new IntegerLiteral(Integer.parseInt(token.image)); }
@@ -322,8 +322,8 @@ Expression Exp():	{
         { return Exp_Aux(id); }
 
 	|	<THIS> 
-        { this = This(); }
-        { return Exp_Aux(this); }
+        { ths = This(); }
+        { return Exp_Aux(th); }
 
 	|	LOOKAHEAD(2) <NEW> <INT> 
         <LCOLCH> 
@@ -430,10 +430,10 @@ Expression ExpRest():	{
 	//<COMMA> Exp()
     <COMMA> 
     exp = Exp() // doubt whether to call a method or node
-    { return exp }
+    { return exp; }
 }
 
 Identifier Id():	{}{
 	<ID>
-    { return new Identifier(token.image) }
+    { return new Identifier(token.image); }
 }       

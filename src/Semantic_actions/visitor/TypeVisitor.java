@@ -1,8 +1,9 @@
-package visitor;
+package Semantic_actions.visitor;
 
-import syntax_tree.*;
-//Alguns métodos diferem no nome
-//Alguns métodos não estão no git, e vice-versa
+//import Semantic_actions.syntax_tree.*;
+import Semantic_actions.syntax_tree.*;
+//Alguns mtodos diferem no nome
+//Alguns mtodos n est no git, e vice-versa
 
 public interface TypeVisitor {
 	public Type visit(And n);

@@ -1,6 +1,6 @@
-package syntax_tree;
-import visitor.Visitor;
-import visitor.TypeVisitor;
+package Semantic_actions.syntax_tree;
+import Semantic_actions.visitor.*;
+//import visitor.TypeVisitor;
 
 public class IdentifierExp extends Exp {
   public String s;

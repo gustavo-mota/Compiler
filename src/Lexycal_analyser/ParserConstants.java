@@ -59,7 +59,7 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int EQUAL = 25;
   /** RegularExpression Id. */
-  int LESS_THEN = 26;
+  int LESS_THAN = 26;
   /** RegularExpression Id. */
   int PLUS = 27;
   /** RegularExpression Id. */
