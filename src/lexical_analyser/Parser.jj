@@ -120,6 +120,8 @@ MainClass MainClass():	{
     { return MainClass(class_id, id, stm); } // atention
 }
 
+// the refactoring of the grammar is maintained by the return semantic action
+// this is the reason why the call to aux does not appear
 ClassDecl ClassDecl():	{  // Correction
     Identifier id;
 }{ 
@@ -293,6 +295,8 @@ Statement Statement():	{
         { return new ArrayAssign(id, exp, exp2); }
 }
 
+// the refactoring of the grammar is maintained by the return semantic action
+// this is the reason why the call to aux does not appear
 Expression Exp():	{  
     IntegerLiteral integer; // exp
     True tr;
@@ -366,7 +370,6 @@ Expression Exp_Aux(Expression exp):	{
 }{
 		<AND> 
         exp_aux = Exp()
-        //exp_aux = Exp_Aux()
         { ad = new And(exp, exp_aux); } // exp comes from call
         { return Exp_Aux(ad); }
 
@@ -421,13 +424,12 @@ ExpList ExpList():	{
 		( exp_begin = Exp() {explist.addElement(exp_begin);} )
         ( exp_end = ExpRest() {explist.addElement(exp_end);} )*
         { return explist; }
-	|	{ return explist; } // Before was void
+	|	{ return explist; } // Before was empty
 }
 
 Expression ExpRest():	{
     Expression exp;
 }{
-	//<COMMA> Exp()
     <COMMA> 
     exp = Exp() // doubt whether to call a method or node
     { return exp; }

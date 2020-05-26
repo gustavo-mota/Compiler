@@ -44,5 +44,5 @@ $ jjdoc -TEXT Parser.jj
 - Second: Construction of the symbol table
 - Third: Implementation of the type checking.
 
-#### Status: All semantic actions done.
+#### Status: All semantic actions done. Not compiling.
 
